@@ -1,9 +1,10 @@
-var express = require('express');
-var path = require('path');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var session = require('express-session');
-var passport = require('passport');
+const express = require('express');
+const path = require('path');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const passport = require('passport');
+const methodOverride = require('method-override');
 
 // load the env vars
 require('dotenv').config();
@@ -36,6 +37,7 @@ app.use(session({
  }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(methodOverride('_method'));
 
 // mount all routes with appropriate base paths
 app.use('/', indexRoutes);

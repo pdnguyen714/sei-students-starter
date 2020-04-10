@@ -1,11 +1,6 @@
 var router = require('express').Router();
 var studentsCtrl = require('../controllers/students');
 
-const isLoggedIn = (req, res, next) => {
-    if (req.isAuthenticated()) return next();
-    res.redirect('/auth/google');
-}
-
 // GET /students
 router.get('/students', studentsCtrl.index);
 
@@ -15,6 +10,11 @@ router.get('/students', studentsCtrl.index);
 router.post('/facts', isLoggedIn, studentsCtrl.addFact);
 
 // DELETE /facts/:id
-router.delete('/facts/:id', isLoggedIn, studentsCtrl.delFact);
+router.delete('/facts/:id', studentsCtrl.delFact);
+
+function isLoggedIn(req, res, next) {
+  if ( req.isAuthenticated() ) return next();
+  res.redirect('/auth/google');
+}
 
 module.exports = router;
